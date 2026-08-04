@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A simple 16-bit-style top-down youth lacrosse game."
+    >
+    <meta name="theme-color" content="#071a33">
+    <title>Viking Voyagers Lacrosse</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+    <script src="game.js" defer></script>
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="game-header">
+        <div>
+          <p class="eyebrow">Brentwood Viking Voyagers</p>
+          <h1>16-Bit Lacrosse</h1>
+        </div>
+        <div class="header-badge">5v5 &bull; No goalies</div>
+      </header>
+
+      <section class="scoreboard" aria-label="Game scoreboard">
+        <div class="team-score home-score">
+          <span>Voyagers</span>
+          <strong id="home-score">0</strong>
+        </div>
+        <div class="game-clock">
+          <span id="game-state">Ready</span>
+          <strong id="game-time">3:00</strong>
+        </div>
+        <div class="team-score away-score">
+          <strong id="away-score">0</strong>
+          <span>Rivals</span>
+        </div>
+      </section>
+
+      <section class="game-stage" aria-labelledby="game-heading">
+        <h2 class="visually-hidden" id="game-heading">Lacrosse game field</h2>
+        <canvas
+          id="game-canvas"
+          width="960"
+          height="576"
+          tabindex="0"
+          aria-label="Top-down lacrosse field. Use the arrow keys to move, A to pass or poke check, and S to shoot."
+        >
+          Your browser does not support the canvas element required for this game.
+        </canvas>
+
+        <div class="start-overlay" id="start-overlay">
+          <div class="overlay-card">
+            <p class="overlay-kicker">Arcade Youth Lacrosse</p>
+            <h2 id="overlay-title">Take the Field</h2>
+            <p id="overlay-copy">
+              Control the highlighted Voyager, move the ball, and score before time
+              expires.
+            </p>
+            <button id="start-button" type="button">Start Game</button>
+          </div>
+        </div>
+      </section>
+
+      <p class="game-message" id="game-message" aria-live="polite">
+        Press Start Game to begin.
+      </p>
+
+      <section class="control-panel" aria-labelledby="controls-heading">
+        <div>
+          <p class="section-label">Keyboard Controls</p>
+          <h2 id="controls-heading">Simple controls, quick games.</h2>
+        </div>
+        <dl class="controls">
+          <div>
+            <dt><kbd>&larr;</kbd><kbd>&uarr;</kbd><kbd>&darr;</kbd><kbd>&rarr;</kbd></dt>
+            <dd>Move player</dd>
+          </div>
+          <div>
+            <dt><kbd>A</kbd></dt>
+            <dd>Pass with the ball; poke check without it</dd>
+          </div>
+          <div>
+            <dt><kbd>S</kbd></dt>
+            <dd>Shoot</dd>
+          </div>
+          <div>
+            <dt><kbd>P</kbd></dt>
+            <dd>Pause or resume</dd>
+          </div>
+          <div>
+            <dt><kbd>R</kbd></dt>
+            <dd>Restart game</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="rules-panel" aria-labelledby="rules-heading">
+        <div>
+          <p class="section-label">Rules Used</p>
+          <h2 id="rules-heading">Youth rules, simplified for arcade play.</h2>
+        </div>
+        <ul>
+          <li>Five players per team with no goalies.</li>
+          <li>No opening draw; the Voyagers begin with possession.</li>
+          <li>After a goal, the defending team receives the ball for a clear.</li>
+          <li>The crease is protected and field players must remain outside it.</li>
+          <li>Poke checks can dislodge the ball; body checking is not included.</li>
+          <li>Out-of-bounds possession goes to the team that did not touch it last.</li>
+        </ul>
+        <a
+          href="https://www.usalacrosse.com/sites/default/files/documents/Rules/2025-Girls-Youth-Guidebook.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Read the USA Lacrosse Girls Youth Guidebook (PDF)
+        </a>
+      </section>
+    </main>
+  </body>
+</html>

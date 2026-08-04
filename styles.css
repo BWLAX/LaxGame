@@ -1,0 +1,365 @@
+:root {
+  --navy: #071a33;
+  --blue: #12375f;
+  --blue-light: #315f8c;
+  --ice: #dbe8f2;
+  --silver: #a9b7c6;
+  --white: #f8fafc;
+  --black: #05070b;
+  --field-dark: #247049;
+  --field-light: #2f8157;
+  --gold: #f4c95d;
+  --red: #a8323e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  margin: 0;
+  color: var(--white);
+  background:
+    linear-gradient(rgb(255 255 255 / 3%) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--black);
+  font-family: "Courier New", Courier, monospace;
+}
+
+button,
+kbd {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--ice);
+}
+
+a:hover {
+  color: var(--white);
+}
+
+:focus-visible {
+  outline: 4px solid var(--gold);
+  outline-offset: 4px;
+}
+
+.game-shell {
+  width: min(1120px, calc(100% - 1rem));
+  margin-inline: auto;
+  padding-block: 1rem 3rem;
+}
+
+.game-header {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+  justify-content: space-between;
+  padding: 1rem;
+  background: var(--navy);
+  border: 4px solid var(--silver);
+  border-bottom: 0;
+}
+
+.eyebrow,
+.section-label,
+.overlay-kicker {
+  margin: 0 0 0.4rem;
+  color: #7db5e8;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.75rem, 7vw, 3.5rem);
+  line-height: 1;
+}
+
+h2 {
+  font-size: clamp(1.6rem, 5vw, 2.5rem);
+}
+
+.header-badge {
+  padding: 0.55rem 0.75rem;
+  color: var(--navy);
+  background: var(--gold);
+  border: 3px solid var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.scoreboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  min-height: 4.5rem;
+  color: var(--white);
+  background: var(--blue);
+  border: 4px solid var(--silver);
+}
+
+.team-score,
+.game-clock {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.team-score strong {
+  min-width: 2.2rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.away-score {
+  justify-content: flex-end;
+}
+
+.game-clock {
+  display: grid;
+  min-width: 7.5rem;
+  justify-items: center;
+  background: var(--navy);
+  border-inline: 4px solid var(--silver);
+}
+
+.game-clock span {
+  color: var(--ice);
+  font-size: 0.7rem;
+}
+
+.game-clock strong {
+  font-size: 1.5rem;
+}
+
+.game-stage {
+  position: relative;
+  overflow: hidden;
+  background: var(--field-dark);
+  border: 4px solid var(--silver);
+  border-top: 0;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 45%);
+}
+
+#game-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  image-rendering: pixelated;
+  outline-offset: -6px;
+}
+
+.start-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  padding: 1rem;
+  place-items: center;
+  background: rgb(5 7 11 / 72%);
+}
+
+.start-overlay[hidden] {
+  display: none;
+}
+
+.overlay-card {
+  width: min(30rem, 100%);
+  padding: clamp(1.25rem, 5vw, 2.25rem);
+  color: var(--navy);
+  background: var(--white);
+  border: 6px solid var(--navy);
+  box-shadow: 8px 8px 0 var(--gold);
+  text-align: center;
+}
+
+.overlay-card h2 {
+  margin-bottom: 0.75rem;
+  color: var(--navy);
+}
+
+.overlay-card p:not(.overlay-kicker) {
+  line-height: 1.5;
+}
+
+#start-button {
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  color: var(--white);
+  background: var(--blue);
+  border: 4px solid var(--navy);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+#start-button:hover {
+  background: var(--blue-light);
+}
+
+.game-message {
+  min-height: 3.5rem;
+  margin: 0;
+  padding: 1rem;
+  color: var(--navy);
+  background: var(--gold);
+  border: 4px solid var(--silver);
+  border-top: 0;
+  font-weight: 700;
+  text-align: center;
+}
+
+.control-panel,
+.rules-panel {
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 4vw, 2rem);
+  background: var(--navy);
+  border: 4px solid var(--silver);
+}
+
+.controls {
+  display: grid;
+  margin: 0;
+  gap: 0.75rem;
+}
+
+.controls div {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 0.6fr) minmax(0, 1.4fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem;
+  background: rgb(255 255 255 / 5%);
+  border-left: 5px solid var(--blue-light);
+}
+
+.controls dt,
+.controls dd {
+  margin: 0;
+}
+
+kbd {
+  display: inline-grid;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  margin: 0.1rem;
+  padding: 0.35rem;
+  place-items: center;
+  color: var(--navy);
+  background: var(--white);
+  border: 3px solid var(--silver);
+  box-shadow: 0 3px 0 var(--silver);
+  font-weight: 700;
+}
+
+.rules-panel {
+  line-height: 1.6;
+}
+
+.rules-panel ul {
+  display: grid;
+  padding-left: 1.25rem;
+  gap: 0.5rem;
+}
+
+.rules-panel li::marker {
+  color: var(--gold);
+}
+
+.rules-panel a {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-weight: 700;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .game-header {
+    display: grid;
+    align-items: start;
+  }
+
+  .header-badge {
+    width: max-content;
+  }
+
+  .team-score {
+    display: grid;
+    gap: 0;
+    padding-inline: 0.4rem;
+    font-size: 0.66rem;
+  }
+
+  .team-score strong {
+    grid-row: 2;
+    font-size: 1.5rem;
+  }
+
+  .away-score {
+    justify-items: end;
+  }
+
+  .game-clock {
+    min-width: 5.5rem;
+    padding-inline: 0.5rem;
+  }
+
+  .game-clock strong {
+    font-size: 1.15rem;
+  }
+
+  .controls div {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .control-panel,
+  .rules-panel {
+    display: grid;
+    grid-template-columns: minmax(16rem, 0.8fr) minmax(0, 1.2fr);
+    gap: 2rem;
+  }
+
+  .rules-panel a {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
