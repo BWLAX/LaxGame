@@ -13,6 +13,19 @@ python3 -m http.server 8001
 
 Then visit `http://127.0.0.1:8001`.
 
+## Embedded mode
+
+Publish the repository through GitHub Pages, then add `?embed=1` to load the
+compact iframe layout:
+
+```text
+https://bwlax.github.io/LaxGame/?embed=1
+```
+
+Embedded mode hides the standalone header and full rules panel, retains compact
+controls, reports its document height to the parent page, and accepts a trusted
+same-origin pause message when the parent drawer closes.
+
 ## Controls
 
 | Key | Action |

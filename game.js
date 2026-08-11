@@ -11,6 +11,8 @@ const awayScoreElement = document.querySelector("#away-score");
 const gameTimeElement = document.querySelector("#game-time");
 const gameStateElement = document.querySelector("#game-state");
 const gameMessageElement = document.querySelector("#game-message");
+const EMBED_MODE =
+  new URLSearchParams(window.location.search).get("embed") === "1";
 
 const WIDTH = canvas.width;
 const HEIGHT = canvas.height;
@@ -62,6 +64,7 @@ const game = {
   goalTimer: 0,
   restartTeam: HOME,
   controlledId: null,
+  pausedPhase: "playing",
   message: "Press Start Game to begin.",
 };
 
@@ -190,6 +193,7 @@ function resetGame(startImmediately = false) {
   game.timeRemaining = GAME_LENGTH;
   game.goalTimer = 0;
   game.restartTeam = HOME;
+  game.pausedPhase = "playing";
   resetPositions(HOME);
 
   if (startImmediately) {
@@ -212,7 +216,7 @@ function resetGame(startImmediately = false) {
 
 function startOrResumeGame() {
   if (game.phase === "paused") {
-    game.phase = "playing";
+    game.phase = game.pausedPhase;
     startOverlay.hidden = true;
     setMessage("Game resumed.");
     canvas.focus();
@@ -221,6 +225,21 @@ function startOrResumeGame() {
   }
 
   resetGame(true);
+}
+
+function pauseGame(message = "Game paused.") {
+  if (game.phase !== "playing" && game.phase !== "goal") {
+    return;
+  }
+
+  game.pausedPhase = game.phase;
+  game.phase = "paused";
+  startOverlay.hidden = false;
+  overlayTitle.textContent = "Paused";
+  overlayCopy.textContent = "Take a break, then return to the field.";
+  startButton.textContent = "Resume";
+  setMessage(message);
+  updateHud();
 }
 
 function takePossession(player, announce = true) {
@@ -729,14 +748,8 @@ function update(deltaTime) {
   }
 
   if (input.pressed.has("KeyP")) {
-    if (game.phase === "playing") {
-      game.phase = "paused";
-      startOverlay.hidden = false;
-      overlayTitle.textContent = "Paused";
-      overlayCopy.textContent = "Take a break, then return to the field.";
-      startButton.textContent = "Resume";
-      setMessage("Game paused.");
-      updateHud();
+    if (game.phase === "playing" || game.phase === "goal") {
+      pauseGame();
     } else if (game.phase === "paused") {
       startOrResumeGame();
     }
@@ -1037,6 +1050,45 @@ window.addEventListener("blur", () => {
   input.held.clear();
   input.pressed.clear();
 });
+
+function postEmbedHeight() {
+  if (!EMBED_MODE || window.parent === window) {
+    return;
+  }
+
+  window.parent.postMessage(
+    {
+      source: "bwlax-laxgame",
+      type: "resize",
+      height: Math.ceil(document.documentElement.scrollHeight),
+    },
+    window.location.origin,
+  );
+}
+
+window.addEventListener("message", (event) => {
+  if (
+    !EMBED_MODE ||
+    event.source !== window.parent ||
+    event.origin !== window.location.origin ||
+    event.data?.source !== "bwlax-laxlanding"
+  ) {
+    return;
+  }
+
+  if (event.data.action === "pause") {
+    pauseGame("Game paused because the game drawer was closed.");
+  }
+});
+
+if (EMBED_MODE) {
+  window.addEventListener("load", postEmbedHeight);
+  window.addEventListener("resize", postEmbedHeight);
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(postEmbedHeight).observe(document.body);
+  }
+}
 
 startButton.addEventListener("click", startOrResumeGame);
 

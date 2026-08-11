@@ -363,3 +363,71 @@ kbd {
     scroll-behavior: auto !important;
   }
 }
+
+.embed-mode body {
+  min-width: 0;
+  background: var(--navy);
+}
+
+.embed-mode .game-shell {
+  width: 100%;
+  padding: 0;
+}
+
+.embed-mode .game-header,
+.embed-mode .rules-panel {
+  display: none;
+}
+
+.embed-mode .scoreboard {
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+}
+
+.embed-mode .game-stage,
+.embed-mode .game-message {
+  border-right: 0;
+  border-left: 0;
+}
+
+.embed-mode .control-panel {
+  display: block;
+  margin: 0;
+  padding: 1rem;
+  border: 0;
+  border-top: 4px solid var(--silver);
+}
+
+.embed-mode .control-panel h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.3rem;
+}
+
+.embed-mode .controls {
+  gap: 0.5rem;
+}
+
+.embed-mode .controls div {
+  grid-template-columns: minmax(4.5rem, auto) minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: 0.55rem;
+  font-size: 0.78rem;
+}
+
+.embed-mode kbd {
+  min-width: 1.8rem;
+  min-height: 1.8rem;
+  padding: 0.2rem;
+}
+
+@media (min-width: 700px) {
+  .embed-mode .controls {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .embed-mode .controls div {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+}
