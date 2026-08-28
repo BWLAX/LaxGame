@@ -10,6 +10,11 @@
     <meta name="theme-color" content="#071a33">
     <title>Viking Voyagers Lacrosse</title>
     <link rel="icon" href="data:,">
+    <script>
+      if (new URLSearchParams(window.location.search).get("embed") === "1") {
+        document.documentElement.classList.add("embed-mode");
+      }
+    </script>
     <link rel="stylesheet" href="styles.css">
     <script src="game.js" defer></script>
   </head>
